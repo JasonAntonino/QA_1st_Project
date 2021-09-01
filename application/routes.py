@@ -1,28 +1,15 @@
 from application import app, db                     #Imports the Flask app and Database objects
 from application.models import Teams, Players       #Imports the tables of the database
+from flask import render_template
 
 @app.route('/')
 def home():
-    #Creates a team named Manchester United
-    manchesterUnited = Teams(
-        team_name = "Manchester United",
-        team_manager = "Ole Gunnar Solskjaer",
-        team_location = "Manchester",
-    )
+    return render_template('home.html')
 
-    #Creates a player for Manchester United
-    player1 = Players(
-        fk_team_id = manchesterUnited.id,
-        player_first_name = "Bruno",
-        player_last_name = "Fernandes",
-        player_age = 26
-    )
+@app.route('/addTeam')
+def addTeam():
+    return render_template('addTeam.html')
 
-    db.session.add(manchesterUnited)
-    db.session.commit()
-
-    print(manchesterUnited)
-    print(player1)
-
-
-    return "Added a new team and a player"
+@app.route('/addPlayer')
+def addPlayer():
+    return render_template('addPlayer.html')
