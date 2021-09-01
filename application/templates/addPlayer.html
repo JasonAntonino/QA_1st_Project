@@ -6,6 +6,20 @@
 </head>
 <body>
     {% block body %}
-        <h1>Add player page</h1>
+        <!-- <h1>Add player page</h1> -->
+        <div class="form">
+            <form action="" method="POST">
+                {{ form.hidden_tag() }}     <!-- Helps prevent CSRF attack -->
+                
+                <!-- Form shown to the user (field title: field box ) -->
+                {{ form.fk_team_id.label }}: {{form.fk_team_id}} <br>
+                {{ form.player_first_name.label }}: {{ form.player_first_name }} <br>
+                {{ form.player_last_name.label }}: {{ form.player_last_name }} <br>
+                {{ form.player_age.label }}: {{ form.player_age }} <br>
+                {{ form.submit }} <br>
+            </form>
+            {{ message }}
+        </div>
+
     {% endblock body %}
 </body>
