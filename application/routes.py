@@ -5,7 +5,10 @@ from application.forms import TeamForm, PlayerForm  #Imports the forms for addin
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    allTeams = Teams.query.all()        #Gets all the teams - returns a list
+    allPlayers = Players.query.all()    #Gets all the players - returns a list
+
+    return render_template('home.html', allTeams=allTeams, allPlayers=allPlayers) #teamList=teamList)
 
 
 

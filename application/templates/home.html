@@ -8,5 +8,22 @@
 <body>
     {% block body %}
         <h1>THIS IS THE HOME PAGE!!!!!</h1>
+
+        {% for team in allTeams %}
+            <div>
+                <table>
+                    <tr>
+                        <th>{{ team.team_name }}</th>
+                    </tr>
+                    
+                    {% for player in allPlayers %}
+                        {% if player.fk_team_id == team.id %}
+                            <tr><td>{{ player.player_first_name }} {{player.player_last_name}}</td></tr>
+                        {% endif %}
+                    {% endfor %}
+
+                </table>
+            </div>
+        {% endfor %}
     {% endblock body %}
 </body>
