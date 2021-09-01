@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% block title %}
+            <title>Layout</title>
+        {% endblock title %}
+    </head>
+
+    <body>
+        <div class="navbar">
+            <a href="{{url_for('addTeam')}}">Add a Team</a>
+            <a href="{{url_for('addPlayer')}}">Add a Player</a>
+        </div>
+
+        {% block body %}
+
+        {% endblock body %}
+    </body>
+</html>
