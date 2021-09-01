@@ -6,7 +6,20 @@
 </head>
 <body>
     {% block body %}
-        <h1>Add team page</h1>
+        <!-- <h1>Add team page</h1> -->
+        <div class="form">
+            <form action="" method="POST">
+                {{ form.hidden_tag() }}     <!-- Helps prevent CSRF attack -->
+                
+                <!-- Form shown to the user (field title: field box ) -->
+                {{ form.team_name.label }}: {{ form.team_name }} <br>
+                {{ form.team_manager.label }}: {{ form.team_manager }} <br>
+                {{ form.team_location.label }}: {{ form.team_location }} <br>
+                {{ form.submit }}
+            </form>
+            {{ message }}
+        </div>
+        
 
     {% endblock body %}
 </body>
