@@ -17,7 +17,12 @@ class TeamForm(FlaskForm):
     
     submit = SubmitField('Add Team')                          #Submit button
 
+#Form to select which team will be updated
+class UpdateTeamForm(FlaskForm):
+    team_name = SelectField('Select Team to update', choices=[],
+        validators=[DataRequired()])
 
+    submit = SubmitField('Edit Team')
 
 
 #Form for adding a new Player record
@@ -35,3 +40,13 @@ class PlayerForm(FlaskForm):
         validators=[DataRequired()])                            #Collects age of player
         
     submit = SubmitField('Add Player')                          #Submit button
+
+
+class UpdatePlayerForm(FlaskForm):
+    # fk_team_id = SelectField('Select Team of player to be updated', choices=[],
+    #     validators=[DataRequired()])
+    
+    player_id = SelectField('Select player to update', choices=[],
+        validators=[DataRequired()])
+
+    submit = SubmitField('Edit Player')
