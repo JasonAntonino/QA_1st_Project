@@ -17,7 +17,12 @@ class TeamForm(FlaskForm):
     
     submit = SubmitField('Add Team')                          #Submit button
 
+#Form to select which team will be updated
+class UpdateTeamForm(FlaskForm):
+    team_name = SelectField('Select Team to update', choices=[],
+        validators=[DataRequired()])
 
+    submit = SubmitField('Edit Team')
 
 
 #Form for adding a new Player record

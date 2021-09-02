@@ -1,7 +1,7 @@
 from application import app, db                     #Imports the Flask app and Database objects
 from application.models import Teams, Players       #Imports the tables of the database
-from flask import render_template, request
-from application.forms import TeamForm, PlayerForm  #Imports the forms for adding a new team and player records
+from flask import render_template, url_for, request, redirect, flash
+from application.forms import TeamForm, PlayerForm, UpdateTeamForm  #Imports the forms for adding a new team and player records
 
 @app.route('/')
 def home():
@@ -74,4 +74,57 @@ def addPlayer():
 
 
 
+#First page shown when updating a Team's details
+@app.route('/updateTeam', methods=['GET', 'POST'])
+def updateTeam():
+    form = UpdateTeamForm()         #Only cotains a select field which asks for which team to update
+
+    allTeams = Teams.query.all()    #Collects all team record within the database
     
+    #Adds exisiting teams from database to choices of team_name
+    #The select field will display team names (not team id)
+    for team in allTeams:
+        form.team_name.choices.append(
+            (team.team_name, f"{team.team_name}")      #Format: (team_name, label)
+        )
+
+    #If HTTP Request = POST and all validations are good:
+    if request.method == 'POST' and form.validate_on_submit():
+        #Gets the team record for the selected team
+        chosenTeam = Teams.query.filter_by(team_name=form.team_name.data).first()
+        #Retrieves the team name of the selected team
+        chosenTeamName = chosenTeam.team_name
+
+        #Upon form submission, user is redirected to a new page
+        #The selected team's name is also passed in the URL (part of url_for())
+        return redirect(url_for('updateTeamDetails', chosenTeamName=chosenTeamName))
+    
+    #If HTTP Request = GET or some validations are bad, render the same page
+    return render_template('updateTeam.html', form=form)
+
+
+
+@app.route('/updateTeam/<chosenTeamName>', methods=['GET', 'POST'])
+def updateTeamDetails(chosenTeamName):
+    form = TeamForm()       #This is the same form as the one used for adding a new team
+
+    #Gets the team record based on the given team name from the URL
+    chosenTeam = Teams.query.filter_by(team_name=chosenTeamName).first()
+
+    #If HTTP Request = POST and all validations are good:
+    if request.method == 'POST' and form.validate_on_submit():
+        message = f"""Changes: 
+            {chosenTeam.team_name} to {form.team_name.data}, 
+            {chosenTeam.team_manager} to {form.team_manager.data}, 
+            {chosenTeam.team_location} to {form.team_location.data}"""
+        
+        #Update the specific team record based on the user input on the form
+        chosenTeam.team_name = form.team_name.data
+        chosenTeam.team_manager = form.team_manager.data
+        chosenTeam.team_location = form.team_location.data
+        db.session.commit()
+
+        flash(message)  #Displays the message in the destination page
+        return redirect(url_for('updateTeam'))
+    
+    return render_template('updateTeamDetails.html', form=form)
