@@ -40,3 +40,13 @@ class PlayerForm(FlaskForm):
         validators=[DataRequired()])                            #Collects age of player
         
     submit = SubmitField('Add Player')                          #Submit button
+
+
+class UpdatePlayerForm(FlaskForm):
+    # fk_team_id = SelectField('Select Team of player to be updated', choices=[],
+    #     validators=[DataRequired()])
+    
+    player_id = SelectField('Select player to update', choices=[],
+        validators=[DataRequired()])
+
+    submit = SubmitField('Edit Player')

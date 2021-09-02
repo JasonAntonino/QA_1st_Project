@@ -1,7 +1,7 @@
 from application import app, db                     #Imports the Flask app and Database objects
 from application.models import Teams, Players       #Imports the tables of the database
 from flask import render_template, url_for, request, redirect, flash
-from application.forms import TeamForm, PlayerForm, UpdateTeamForm  #Imports the forms for adding a new team and player records
+from application.forms import TeamForm, PlayerForm, UpdateTeamForm, UpdatePlayerForm  #Imports the forms for adding a new team and player records
 
 @app.route('/')
 def home():
@@ -128,3 +128,53 @@ def updateTeamDetails(chosenTeamName):
         return redirect(url_for('updateTeam'))
     
     return render_template('updateTeamDetails.html', form=form)
+
+
+@app.route('/updatePlayer', methods=['GET', 'POST'])
+def updatePlayer():
+    form = UpdatePlayerForm()
+    allPlayers = Players.query.all()
+
+    for player in allPlayers:
+        #If current player's fk_team_id matches chosenteamid
+        #Add player firstname and lastname to the choices in the form
+        form.player_id.choices.append(
+            (player.id, f"{player.player_first_name} {player.player_last_name}")
+        )
+
+    if request.method == 'POST' and form.validate_on_submit():
+        chosenPlayerId = form.player_id.data
+        return redirect(url_for('updatePlayerDetails', chosenPlayerId=chosenPlayerId))
+
+    return render_template('updatePlayer.html', form=form)
+
+
+@app.route('/updatePlayer/<chosenPlayerId>', methods=['GET', 'POST'])
+def updatePlayerDetails(chosenPlayerId):
+    form = PlayerForm()
+    chosenPlayer = Players.query.get(int(chosenPlayerId))
+
+    #Collects all team record within the database
+    allTeams = Teams.query.all()    
+    #Adds exisiting teams from database to choices of fk_team_id
+    for team in allTeams:
+        form.fk_team_id.choices.append(
+            (team.id, f"{team.team_name}")      #Format: (team_id, label)
+        )
+
+    if request.method == 'POST' and form.validate_on_submit():
+        message = f"""Changes: 
+            {chosenPlayer.player_first_name} to {form.player_first_name.data}, 
+            {chosenPlayer.player_last_name} to {form.player_last_name.data}, 
+            {chosenPlayer.player_age} to {form.player_age.data}"""
+
+        chosenPlayer.fk_team_id = form.fk_team_id.data
+        chosenPlayer.player_first_name = form.player_first_name.data
+        chosenPlayer.player_last_name = form.player_last_name.data
+        chosenPlayer.player_age = form.player_age.data
+        db.session.commit()
+
+        flash(message)
+        return redirect(url_for('updatePlayer'))
+
+    return render_template('updatePlayerDetails.html', form=form)
