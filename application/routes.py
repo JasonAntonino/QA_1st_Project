@@ -1,7 +1,7 @@
 from application import app, db                     #Imports the Flask app and Database objects
 from application.models import Teams, Players       #Imports the tables of the database
 from flask import render_template, url_for, request, redirect, flash
-from application.forms import TeamForm, PlayerForm, UpdateTeamForm, UpdatePlayerForm  #Imports the forms for adding a new team and player records
+from application.forms import TeamForm, PlayerForm, UpdateTeamForm, UpdatePlayerForm, DeletePlayerForm  #Imports the forms for adding a new team and player records
 
 @app.route('/')
 def home():
@@ -178,3 +178,28 @@ def updatePlayerDetails(chosenPlayerId):
         return redirect(url_for('updatePlayer'))
 
     return render_template('updatePlayerDetails.html', form=form)
+
+
+@app.route('/deletePlayer', methods=['GET', 'POST'])
+def deletePlayer():
+    form = DeletePlayerForm()
+
+    allPlayers = Players.query.all()
+
+    for player in allPlayers:
+        form.player_id.choices.append(
+            (player.id, f"{player.player_first_name} {player.player_last_name}")
+        )
+
+    if request.method == 'POST' and form.validate_on_submit():
+        chosenPlayerId = form.player_id.data
+        playerToDelete = Players.query.get(chosenPlayerId)
+
+        db.session.delete(playerToDelete)
+        db.session.commit()
+
+        message = f"Player {playerToDelete.player_first_name} {playerToDelete.player_last_name} has been deleted."
+        flash(message)
+        return redirect(url_for('deletePlayer'))
+
+    return render_template('deletePlayer.html', form=form)

@@ -50,3 +50,10 @@ class UpdatePlayerForm(FlaskForm):
         validators=[DataRequired()])
 
     submit = SubmitField('Edit Player')
+
+
+class DeletePlayerForm(FlaskForm):
+    player_id = SelectField('Select player to delete', choices=[],
+        validators=[DataRequired()])
+
+    submit = SubmitField('Delete Player')
