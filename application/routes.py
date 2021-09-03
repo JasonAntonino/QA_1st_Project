@@ -1,7 +1,7 @@
 from application import app, db                     #Imports the Flask app and Database objects
 from application.models import Teams, Players       #Imports the tables of the database
 from flask import render_template, url_for, request, redirect, flash
-from application.forms import TeamForm, PlayerForm, UpdateTeamForm, UpdatePlayerForm  #Imports the forms for adding a new team and player records
+from application.forms import TeamForm, PlayerForm, UpdateTeamForm, UpdatePlayerForm, DeletePlayerForm, DeleteTeamForm  #Imports the forms for adding a new team and player records
 
 @app.route('/')
 def home():
@@ -178,3 +178,62 @@ def updatePlayerDetails(chosenPlayerId):
         return redirect(url_for('updatePlayer'))
 
     return render_template('updatePlayerDetails.html', form=form)
+
+
+@app.route('/deletePlayer', methods=['GET', 'POST'])
+def deletePlayer():
+    form = DeletePlayerForm()
+
+    allPlayers = Players.query.all()
+
+    for player in allPlayers:
+        form.player_id.choices.append(
+            (player.id, f"{player.player_first_name} {player.player_last_name}")
+        )
+
+    if request.method == 'POST' and form.validate_on_submit():
+        chosenPlayerId = form.player_id.data
+        playerToDelete = Players.query.get(chosenPlayerId)
+
+        db.session.delete(playerToDelete)
+        db.session.commit()
+
+        message = f"Player {playerToDelete.player_first_name} {playerToDelete.player_last_name} has been deleted."
+        flash(message)
+        return redirect(url_for('deletePlayer'))
+
+    return render_template('deletePlayer.html', form=form)
+
+
+@app.route('/deleteTeam', methods=['GET', 'POST'])
+def deleteTeam():
+    form = DeleteTeamForm()
+
+    allTeams = Teams.query.all()
+    #Adds exisiting teams from database to choices of fk_team_id
+    for team in allTeams:
+        form.team_id.choices.append(
+            (team.id, f"{team.team_name}")      #Format: (team_id, label)
+        )
+
+    if request.method == 'POST' and form.validate_on_submit():
+        teamIdToDelete = form.team_id.data
+
+        playersToDelete = Players.query.filter_by(fk_team_id=teamIdToDelete).all()
+
+        #Deletes all the players associated with the team to delete
+        for player in playersToDelete:
+            db.session.delete(player)
+            db.session.commit()
+        
+
+        teamToDelete = Teams.query.get(teamIdToDelete)
+        db.session.delete(teamToDelete)
+        db.session.commit()
+
+        message = f"Team {teamToDelete.team_name} has been deleted."
+        flash(message)
+
+        return redirect(url_for('deleteTeam'))
+
+    return render_template('deleteTeam.html', form=form)

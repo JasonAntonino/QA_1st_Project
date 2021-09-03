@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+<head>
+    {% block title %}
+        <title>Delete a Player</title>
+    {% endblock title %}
+</head>
+<body>
+    {% block body %}
+        <h1>Delete a Player page</h1>
+        <div class="form">
+            <form action="" method="POST">
+                {{ form.hidden_tag() }}     <!-- Helps prevent CSRF attack -->
+                <!-- Form shown to the user (field title: field box ) -->
+                {{ form.player_id.label }}: {{ form.player_id }} <br>
+                {{ form.submit }}
+            </form>
+            {% for message in get_flashed_messages() %}
+                {{ message }}
+            {% endfor %}
+        </div>
+
+    {% endblock body %}
+</body>
