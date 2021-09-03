@@ -15,7 +15,7 @@ class TeamForm(FlaskForm):
     team_location = StringField('Location',
         validators=[DataRequired(), Length(min=1, max=200)])  #Collects location of team
     
-    submit = SubmitField('Add Team')                          #Submit button
+    submit = SubmitField('Submit')                          #Submit button
 
 #Form to select which team will be updated
 class UpdateTeamForm(FlaskForm):
@@ -48,7 +48,7 @@ class PlayerForm(FlaskForm):
     player_age = IntegerField('Age',
         validators=[DataRequired()])                            #Collects age of player
         
-    submit = SubmitField('Add Player')                          #Submit button
+    submit = SubmitField('Submit')                          #Submit button
 
 
 class UpdatePlayerForm(FlaskForm):

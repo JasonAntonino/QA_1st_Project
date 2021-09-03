@@ -30,7 +30,8 @@ def addTeam():
 
             message = f"You have added the team: {form.team_name.data}"
 
-            return render_template('addTeam.html', form=form, message=message)
+            flash(message)
+            return redirect(url_for('addTeam'))
         
         return render_template('addTeam.html', form=form)
     else:
@@ -66,7 +67,8 @@ def addPlayer():
 
             message = f"You have added the player: {form.player_first_name.data} {form.player_last_name.data}"
 
-            return render_template('addPlayer.html', form=form, message=message)
+            flash(message)
+            return redirect(url_for('addPlayer'))
 
         return render_template('addPlayer.html', form=form)
     else:
