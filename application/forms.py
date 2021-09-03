@@ -25,6 +25,15 @@ class UpdateTeamForm(FlaskForm):
     submit = SubmitField('Edit Team')
 
 
+class DeleteTeamForm(FlaskForm):
+    team_id = SelectField('Select Team to delete', choices=[],
+        validators=[DataRequired()])
+
+    submit = SubmitField('Delete Team')
+
+
+
+
 #Form for adding a new Player record
 class PlayerForm(FlaskForm):
     fk_team_id = SelectField('Team of the player', choices=[],
@@ -43,9 +52,6 @@ class PlayerForm(FlaskForm):
 
 
 class UpdatePlayerForm(FlaskForm):
-    # fk_team_id = SelectField('Select Team of player to be updated', choices=[],
-    #     validators=[DataRequired()])
-    
     player_id = SelectField('Select player to update', choices=[],
         validators=[DataRequired()])
 
