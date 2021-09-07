@@ -11,32 +11,27 @@ def home():
     return render_template('home.html', allTeams=allTeams, allPlayers=allPlayers) #teamList=teamList)
 
 
-
 @app.route('/addTeam', methods=['GET', 'POST'])
 def addTeam():
     form = TeamForm()               #Creating a new team form
 
-    if form.validate_on_submit():
-        if request.method == 'POST' and form.validate_on_submit():    #If a form is submitted (from html file)
-            #Create a new Team record - Send data from form to database
-            newTeam = Teams(
-                team_name = form.team_name.data,
-                team_manager = form.team_manager.data,
-                team_location = form.team_location.data
-            )
+    if request.method == 'POST' and form.validate_on_submit():    #If a form is submitted (from html file)
+        #Create a new Team record - Send data from form to database
+        newTeam = Teams(
+            team_name = form.team_name.data,
+            team_manager = form.team_manager.data,
+            team_location = form.team_location.data
+        )
 
-            db.session.add(newTeam)     #Stages newly created team record
-            db.session.commit()         #Puts staged team record into the database
+        db.session.add(newTeam)     #Stages newly created team record
+        db.session.commit()         #Puts staged team record into the database
 
-            message = f"You have added the team: {form.team_name.data}"
+        message = f"You have added the team: {form.team_name.data}"
 
-            flash(message)
-            return redirect(url_for('addTeam'))
-        
-        return render_template('addTeam.html', form=form)
-    else:
-        return render_template('addTeam.html', form=form)
-
+        flash(message)
+        return redirect(url_for('addTeam'))
+    
+    return render_template('addTeam.html', form=form)
 
 
 @app.route('/addPlayer', methods=['GET', 'POST'])
@@ -52,28 +47,22 @@ def addPlayer():
             (team.id, f"{team.team_name}")      #Format: (team_id, label)
         )
 
-    if form.validate_on_submit():
-        if request.method == 'POST':
-            #Create a new Player record - data coming from form
-            newPlayer = Players(
-                fk_team_id = form.fk_team_id.data,
-                player_first_name = form.player_first_name.data,
-                player_last_name = form.player_last_name.data,
-                player_age = form.player_age.data
-            )
+    if request.method == 'POST' and form.validate_on_submit():
+        #Create a new Player record - data coming from form
+        newPlayer = Players(
+            fk_team_id = form.fk_team_id.data,
+            player_first_name = form.player_first_name.data,
+            player_last_name = form.player_last_name.data,
+            player_age = form.player_age.data
+        )
+        db.session.add(newPlayer)
+        db.session.commit()
 
-            db.session.add(newPlayer)
-            db.session.commit()
+        message = f"You have added the player: {form.player_first_name.data} {form.player_last_name.data}"
 
-            message = f"You have added the player: {form.player_first_name.data} {form.player_last_name.data}"
-
-            flash(message)
-            return redirect(url_for('addPlayer'))
-
-        return render_template('addPlayer.html', form=form)
-    else:
-        return render_template('addPlayer.html', form=form)
-
+        flash(message)
+        return redirect(url_for('addPlayer'))
+    return render_template('addPlayer.html', form=form)
 
 
 #First page shown when updating a Team's details
@@ -105,10 +94,9 @@ def updateTeam():
     return render_template('updateTeam.html', form=form)
 
 
-
 @app.route('/updateTeam/<chosenTeamName>', methods=['GET', 'POST'])
 def updateTeamDetails(chosenTeamName):
-    form = TeamForm()       #This is the same form as the one used for adding a new team
+    form = TeamForm()      #This is the same form as the one used for adding a new team
 
     #Gets the team record based on the given team name from the URL
     chosenTeam = Teams.query.filter_by(team_name=chosenTeamName).first()
