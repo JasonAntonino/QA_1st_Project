@@ -13,7 +13,6 @@ class TestBase(LiveServerTestCase):
             LIVESERVER_PORT = self.TEST_PORT,
             DEBUG=True,
             TESTING = True
-            # WTF_CSRF_ENABLED=False
         )
         return app
 
@@ -25,7 +24,7 @@ class TestBase(LiveServerTestCase):
 
         db.create_all()
         self.driver.get(f'http://localhost:{self.TEST_PORT}')
-    
+        
     def tearDown(self):
         self.driver.quit()
         db.drop_all()
@@ -37,29 +36,20 @@ class TestBase(LiveServerTestCase):
 
 class TestCreate(TestBase):
     def test_create_Team(self):
-        self.driver.get(f'http://localhost:{self.TEST_PORT}/addTeam')
+        # self.driver.get(f'http://localhost:{self.TEST_PORT}/addTeam')
+        self.driver.find_element_by_xpath("/html/body/div[1]/a[2]").click()
 
-        print("works 1")
-
-        teamNameField = self.driver.find_element_by_xpath("/html/body/div[2]/form/input[2]")
+        teamNameField = self.driver.find_element_by_xpath('//*[@id="team_name"]')
         teamNameField.send_keys("Liverpool FC")
 
-        print("works 2")
-
-        teamManagerField = self.driver.find_element_by_xpath("/html/body/div[2]/form/input[3]")
+        teamManagerField = self.driver.find_element_by_xpath('//*[@id="team_manager"]')        
         teamManagerField.send_keys("Jurgen Klopp")
 
-        print("works 3")
-
-        teamLocationField = self.driver.find_element_by_xpath("/html/body/div[2]/form/input[4]")
+        teamLocationField = self.driver.find_element_by_xpath('//*[@id="team_location"]')
         teamLocationField.send_keys("Liverpool")
 
-        print("works 4")
-
-        self.driver.find_element_by_xpath("/html/body/div[2]/form/input[5]").click()
-
-        print("works 5")
+        self.driver.find_element_by_xpath('//*[@id="submit"]').click()
 
         teams = Teams.query.all()
-        self.assertEqual(len(teams), 1)
+        self.assertEqual(Teams.query.count(), 1)
 
