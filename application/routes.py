@@ -31,7 +31,8 @@ def addTeam():
         flash(message)
         return redirect(url_for('addTeam'))
     
-    return render_template('addTeam.html', form=form)
+    errorList = list(form.errors.values())
+    return render_template('addTeam.html', form=form, errorList=errorList)
 
 
 @app.route('/addPlayer', methods=['GET', 'POST'])
@@ -62,7 +63,10 @@ def addPlayer():
 
         flash(message)
         return redirect(url_for('addPlayer'))
-    return render_template('addPlayer.html', form=form)
+    
+    errorList = list(form.errors.values())
+    errorListLength = len(errorList)
+    return render_template('addPlayer.html', form=form, errorList=errorList, errorListLength=errorListLength)
 
 
 #First page shown when updating a Team's details
@@ -117,7 +121,10 @@ def updateTeamDetails(chosenTeamName):
         flash(message)  #Displays the message in the destination page
         return redirect(url_for('updateTeam'))
     
-    return render_template('updateTeamDetails.html', form=form)
+
+    errorList = list(form.errors.values())
+    errorListLength = len(errorList)
+    return render_template('updateTeamDetails.html', form=form, errorList=errorList, errorListLength=errorListLength)
 
 
 @app.route('/updatePlayer', methods=['GET', 'POST'])
@@ -167,7 +174,9 @@ def updatePlayerDetails(chosenPlayerId):
         flash(message)
         return redirect(url_for('updatePlayer'))
 
-    return render_template('updatePlayerDetails.html', form=form)
+    errorList = list(form.errors.values())
+    errorListLength = len(errorList)
+    return render_template('updatePlayerDetails.html', form=form, errorList=errorList, errorListLength=errorListLength)
 
 
 @app.route('/deletePlayer', methods=['GET', 'POST'])

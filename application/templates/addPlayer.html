@@ -6,7 +6,7 @@
 </head>
 <body>
     {% block body %}
-        <h1>Add player page</h1>
+        <h1>Add a Player</h1>
         <div class="form">
             <form action="" method="POST">
                 {{ form.hidden_tag() }}     <!-- Helps prevent CSRF attack -->
@@ -21,6 +21,11 @@
             {% for message in get_flashed_messages() %}
                 {{ message }}
             {% endfor %}
+
+            {% if errorListLength != 0 %}
+                {{ "".join(errorList[0]) }}
+            {% endif %}
+
         </div>
 
     {% endblock body %}
