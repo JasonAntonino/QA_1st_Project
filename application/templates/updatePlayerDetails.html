@@ -21,6 +21,10 @@
                 {{ form.submit }}
             </form>
             {{ message }}
+
+            {% if errorListLength != 0 %}
+                {{ "".join(errorList[0]) }}
+            {% endif %}
         </div>
         
     {% endblock body %}

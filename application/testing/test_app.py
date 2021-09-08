@@ -232,3 +232,20 @@ class TestValidationError(TestBase):
         )
         #Checks that a ValidationError has been raised
         assert "The team already exists."
+
+    
+    #Testing: Adding an integer in a name field
+    def test_integer_in_name(self):
+        response = self.client.post(        #Creating a post request
+            url_for('addTeam'),             #Post request going to addTeam route function
+            
+            #Adding a new Team record where manager name contains numbers
+            data = dict(
+                team_name = "Chelsea",
+                team_manager = "Tomas Tuchel 12345",
+                team_location = "London"
+            ),
+            follow_redirects=True
+        )
+        #Checks that a ValidationError has been raised regarding number in name
+        assert "Cannot have a number in the name."

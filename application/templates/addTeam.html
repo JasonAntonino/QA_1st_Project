@@ -20,6 +20,11 @@
             {% for message in get_flashed_messages() %}
                 {{ message }}
             {% endfor %}
+
+            {% for anError in errorList %}
+                {{ "".join(anError) }}
+                <br>
+            {% endfor %}
         </div>
         
 

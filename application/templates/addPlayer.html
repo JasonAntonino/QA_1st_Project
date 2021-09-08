@@ -21,6 +21,11 @@
             {% for message in get_flashed_messages() %}
                 {{ message }}
             {% endfor %}
+
+            {% if errorListLength != 0 %}
+                {{ "".join(errorList[0]) }}
+            {% endif %}
+
         </div>
 
     {% endblock body %}
