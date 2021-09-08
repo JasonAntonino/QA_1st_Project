@@ -188,3 +188,115 @@ class TestDelete(TestBase):
 
         #Assert checks: 0 == 0 (no more player record in database)
         self.assertEqual(Players.query.count(), 0)
+
+
+class TestFormInputs(TestBase):
+    def test_missing_string_field(self):
+        #Click "Add a Player" in the navigation bar
+        self.driver.find_element_by_xpath('/html/body/div[1]/a[3]').click()
+
+        #Give form details
+        teamNameField = self.driver.find_element_by_xpath('//*[@id="fk_team_id"]')
+
+        #First Name Field has been removed (to re-enact a non-complete form)
+
+        lastNameField = self.driver.find_element_by_xpath('//*[@id="player_last_name"]')
+        lastNameField.send_keys("White")
+
+        ageField = self.driver.find_element_by_xpath('//*[@id="player_age"]')
+        ageField.send_keys(23)
+
+        #Click the submit button
+        self.driver.find_element_by_xpath('//*[@id="submit"]').click()
+
+        #Assert checks: 1 == 1 (no new player record was created as a form was not fully filled in)
+        self.assertEqual(Players.query.count(), 1)
+
+
+    def test_missing_integer_field(self):
+        #Click "Add a Player" in the navigation bar
+        self.driver.find_element_by_xpath('/html/body/div[1]/a[3]').click()
+
+        #Give form details
+        teamNameField = self.driver.find_element_by_xpath('//*[@id="fk_team_id"]')
+
+        firstNameField = self.driver.find_element_by_xpath('//*[@id="player_first_name"]')
+        firstNameField.send_keys("Ben")
+
+        lastNameField = self.driver.find_element_by_xpath('//*[@id="player_last_name"]')
+        lastNameField.send_keys("White")
+
+        #Age Field has been removed (to re-enact a non-complete form)
+
+        #Click the submit button
+        self.driver.find_element_by_xpath('//*[@id="submit"]').click()
+
+        #Assert checks: 1 == 1 (no new player record was created as a form was not fully filled in)
+        self.assertEqual(Players.query.count(), 1)
+
+    
+    def test_string_in_integer_field(self):
+        #Click "Add a Player" in the navigation bar
+        self.driver.find_element_by_xpath('/html/body/div[1]/a[3]').click()
+
+        #Give form details
+        teamNameField = self.driver.find_element_by_xpath('//*[@id="fk_team_id"]')
+
+        firstNameField = self.driver.find_element_by_xpath('//*[@id="player_first_name"]')
+        firstNameField.send_keys("Ben")
+
+        lastNameField = self.driver.find_element_by_xpath('//*[@id="player_last_name"]')
+        lastNameField.send_keys("White")
+
+        ageField = self.driver.find_element_by_xpath('//*[@id="player_age"]')
+        ageField.send_keys("a String")
+
+        #Click the submit button
+        self.driver.find_element_by_xpath('//*[@id="submit"]').click()
+
+        #Assert checks: 1 == 1 (only 1 player record as the age field has an invalid input - string instead of an integer)
+        self.assertEqual(Players.query.count(), 1)
+
+
+    def test_integer_in_string_field(self):
+        #Click "Add a Player" in the navigation bar
+        self.driver.find_element_by_xpath('/html/body/div[1]/a[3]').click()
+
+        #Give form details
+        teamNameField = self.driver.find_element_by_xpath('//*[@id="fk_team_id"]')
+
+        firstNameField = self.driver.find_element_by_xpath('//*[@id="player_first_name"]')
+        firstNameField.send_keys("David")
+
+        lastNameField = self.driver.find_element_by_xpath('//*[@id="player_last_name"]')
+        lastNameField.send_keys("De Gea 25")
+
+        ageField = self.driver.find_element_by_xpath('//*[@id="player_age"]')
+        ageField.send_keys(23)
+
+        #Click the submit button
+        self.driver.find_element_by_xpath('//*[@id="submit"]').click()
+
+        #Assert checks: 1 == 1 (only 1 player record as the one being created is invalid)
+        self.assertEqual(Players.query.count(), 2)
+
+    
+    def test_sql_injection(self):
+        self.driver.find_element_by_xpath("/html/body/div[1]/a[2]").click()
+
+        teamNameField = self.driver.find_element_by_xpath('//*[@id="team_name"]')
+        teamNameField.send_keys(";DROP TABLE Teams;")
+
+        teamManagerField = self.driver.find_element_by_xpath('//*[@id="team_manager"]')        
+        teamManagerField.send_keys("Jurgen Klopp")
+
+        teamLocationField = self.driver.find_element_by_xpath('//*[@id="team_location"]')
+        teamLocationField.send_keys("Liverpool")
+
+        self.driver.find_element_by_xpath('//*[@id="submit"]').click()
+
+        #Successful retrieval shows that Team table has not been dropped
+        addedTeam = Teams.query.get(2)  #Retrieves newly added Team record
+        self.assertEqual(addedTeam.team_name, ";DROP TABLE Teams;")
+        self.assertEqual(addedTeam.team_manager, "Jurgen Klopp")
+        self.assertEqual(addedTeam.team_location , "Liverpool")
