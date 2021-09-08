@@ -266,7 +266,7 @@ class TestFormInputs(TestBase):
         teamNameField = self.driver.find_element_by_xpath('//*[@id="fk_team_id"]')
 
         firstNameField = self.driver.find_element_by_xpath('//*[@id="player_first_name"]')
-        firstNameField.send_keys("David")
+        firstNameField.send_keys("4234 David")
 
         lastNameField = self.driver.find_element_by_xpath('//*[@id="player_last_name"]')
         lastNameField.send_keys("De Gea 25")
@@ -278,7 +278,7 @@ class TestFormInputs(TestBase):
         self.driver.find_element_by_xpath('//*[@id="submit"]').click()
 
         #Assert checks: 1 == 1 (only 1 player record as the one being created is invalid)
-        self.assertEqual(Players.query.count(), 2)
+        self.assertEqual(Players.query.count(), 1)
 
     
     def test_sql_injection(self):
