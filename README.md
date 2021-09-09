@@ -53,50 +53,46 @@ To ensure that the application is able to properly load up, these commands have 
 ### Read Operation
 The first time that the application is opened, users will be shown the home page. This is where information about teams and their respective players will be displayed once they are created:
 
-<!-- add image of the home page here -->
+![Home Page](images/home_page_multiple.png)
 
 ### Create Operation
 In order to create a new team or a new player, the user can use the navigation bar, located at the top of the application, and click the "Add a Team" and "Add a Player" hyperlinks respectively.
 
 Due to the relationship of the team and player tables, where a player record requires a team id, a user must first create a team record before being able to create a player record. To achieve this, the user can navigate to the "Add a Team" page where they will be shown the form:
 
-<!-- add image of the add a team page here -->
+![Add a Team Page](images/add_team_filled.png)
 
 Once the user has successfully made a new team record, the user can then navigate to the "Add a Player" page in order to create a new player record:
 
-<!-- add image of the add a player page here -->
-
+![Add a Player Page](images/add_player_filled.png)
 
 
 ### Update Operation
 In the event that the user wants to update details of a team or a player record that have already generated, the user can click the "Update a Team" and "Update a Player" respectively. Clicking on the "Update a Team" will display the form:
 
-<!-- add image of the update a team page here (first page) -->
+![Update a Team Page](images/update_team_empty.png)
 
 Once the user has selected the team they wanted to update, they are redirected to another page containing a form, allowing them to update the details of the chosen team:
 
-<!-- add image of the update team details page (second page) -->
+![Update Team Details Page](images/update_team_details_filled.png)
 
 To update the details of a player record, the user can click on "Update a Player" where they will be shown a new page containing the form:
 
-<!-- add image of update player page (first page) -->
+![Update a Player Page](images/update_player_filled.png)
 
 After selecting the desired player they want to update, the user will then be redirected to a new page containing a form which allow them the ability to update the player's details:
 
-<!-- add image of update player details -->
-
+![Update Team Details Page](images/update_player_details_filled.png)
 
 
 ### Delete Operation
 To delete a team or a player record, the user can click on the "Delete a Team" and "Delete a Player" located on the navigation bar. To delete a team, the user can click on the corresponding hyperlink and will be shown the page:
 
-<!-- add image of delete a team page here -->
+![Delete a Team Page](images/delete_team_filled.png)
 
 To delete a player record, the user can click on the "Delete a Player" where they will be shown the corresponding page:
 
-<!-- add image of delete a player page here -->
-
-
+![Delete a Player Page](images/delete_player_filled.png)
 
 
 ## Unit and Integration Testing
