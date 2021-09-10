@@ -1,7 +1,7 @@
 # DevOps Core Fundamental Project
 
 ## Useful Links
-* [Trello Board](https://trello.com/b/L9eDm4ez/1st-project)
+* Trello Board: [Click Here](https://trello.com/b/L9eDm4ez/1st-project)
 
 
 ## Contents
@@ -42,8 +42,23 @@ These two tables have a One-to-Many relationship, which is denoted by the link b
 
 
 ## Continuous Integration (CI) Pipeline
+The CI pipeline provides the ability to maintain a single source code repository for a project. This means that everyone working on the project are all well informaed as to what is happening with th project. In addition to this, the CI pipeline allow for fast and smoother integration of new features as it promotes the automation of the integration process.
+
+For this project, a continuous integration pipeline has been used for the benefits stated earlier, and the model used can be seen in the diagram below:
+
+![continuous Integration Pipeline Diagram](images/CI_pipeline_updated.png)
+
+To keep track of the product backlog, the project utilises the Trello board as the main project tracking software. As for the code development, the project was developed using an Amazon Web Service (AWS) ec2 Linux instance, and the Python programming language was used.
+
+Changes to the code are pulled from and pushed to the version control system, which for this project is utilising Git with GitHub.
+
+As for the Continuous Integration Server, the project uses Jenkins as the main software. This tool is linked to the pipeline via webhook with GitHub. In the event that changes are pushed to GitHub, the webhook triggers a new Jenkins build which automates the testing of the application.
+
+This automation process starts by Jenkins pulling the latest code repository from GitHub and is then passed to a build tool. From this, unit and integration testing are performed using Pytest and Selenium. Once the tests are completed, the coverage reports are then sent back where it is then displayed within the build history.
+
 ### Project Tracking
 Trello
+agile methodology
 
 ![Trello Sprints](images/trello_sprints.png)
 
@@ -61,7 +76,7 @@ This virtual machine was then used, alongside Python, in order to develop the ap
 ### Continuous Integration (CI) Server
 Jenkins
 
-![continuous Integration Pipeline Diagram](images/CI_Pipeline_updated.png)
+
 
 
 ## Risk Assessment
