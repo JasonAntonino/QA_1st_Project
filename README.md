@@ -1,20 +1,37 @@
 # DevOps Core Fundamental Project
 
+## Useful Links
+* [Trello Board](https://trello.com/b/L9eDm4ez/1st-project)
+
+
+## Contents
+* [Project Objective](#Project-Objective)
+* [Database Architecture](#Database-Architecture)
+* [Continuous Integration (CI) Pipeline](#Continuous-Integration-Pipeline)
+    * [Project Tracking](#Project-Tracking)
+    * [Version Control Sytsem (VCS)](#Version-Control-System-(VCS))
+    * [Cloud-Based Virtual Machine](#Cloud-Based-Virtual-Machine)
+    * [Continuous Integration (CI) Server](#Continuous-Integration-(CI)-Server)
+* [Risk Assessment](#Risk-Assessment)
+* [The Flask Application](#The-Flask-Application)
+    * [Running the Application](#Running-the-Application)
+    * [Read Operation](#Read-Operation)
+    * [Create Operation](#Create-Operation)
+    * [Update Operation](#Update-Operation)
+    * [Delete Operation](#Delete-Operation)
+* [Unit and Integration Testing](#Unit-and-Integration-Testing)
+    * [Unit Testing](#Unit-Testing)
+    * [Integration Testing](#Interation-Testing)
+    * [Testing Results](#Testing-Results)
+* [Future Improvements](#Future-Improvements)
+* [Authors](#Authors)
+
+
 ## Project Objective
-The main objective of this project is to create a CRUD application which incorporates all the supporting tools and technologies covered during training:
-
-* Project Management
-* Python Fundamentals
-* Python Testing
-* Git
-* Basic Linux
-* Python Web Development
-* Continuous Integration
-* Cloud Fundamentals
-* Databases
+The main objective of this project is to create a CRUD application which utilises the "supporting tools, methodologies and techonologies" that have been covered within training so far. 
 
 
-## Database Design
+## Database Architecture
 For the database of the application, there are two main tables that are involved, as shown in the Entity Relationship Diagram below:
 
 ![Entity Relationships Diagram](images/entity_relationships_diagram.png)
@@ -25,7 +42,26 @@ These two tables have a One-to-Many relationship, which is denoted by the link b
 
 
 ## Continuous Integration (CI) Pipeline
+### Project Tracking
+Trello
 
+![Trello Sprints](images/trello_sprints.png)
+
+
+### Version Control System (VCS)
+The version control system's main purpose is to track any changes that has been made to the codebase over time. To add to this, the VCS allow the application to be reverted to a stable state in the event that a newly pushed code breaks the application.
+
+For this project, Git and GitHub was used as the main Version Control System. The main reasoning for this decision is due to the software's wide popularity, due to it being the largest open source repository, along with a wide variety of useful features.
+
+### Cloud-Based Virtual Machine
+For this project, an Amazon Web Services (AWS) ec2 instance was used in order to create the cloud-based virtual machine. The instance type is t2.medium and it was created to use Linux Ubuntu version 18.04. These settings were chosen for this project to ensure that tools such as Jenkins are able to be used without experiencing any issue.
+
+This virtual machine was then used, alongside Python, in order to develop the application. Upon the completion of a task, new changes were then staged, commited and pushed into the GitHub repository. 
+
+### Continuous Integration (CI) Server
+Jenkins
+
+![continuous Integration Pipeline Diagram](images/CI_Pipeline_updated.png)
 
 
 ## Risk Assessment
@@ -43,7 +79,7 @@ There are two main ways in which the application was run within the project, bot
 2. Using Gunicorn: ``` gunicorn --workers=4 --bind=0.0.0.0:5000 app:app ```
 
 To ensure that the application is able to properly load up, these commands have to be run before running the application:
-
+* Crate a virtual environment: ``` python -m venv venv ``` then ``` source venv/bin/activate ```
 * Installing all required modules: ``` pip install -r requirements.txt ```
 * Exporting the DATABASE_URI environment variable
 * Exporting the SECRET_KEY environment variable
@@ -127,3 +163,16 @@ The image below shows the last successful build performed within Jenkins which i
 
 
 ![Unit and Integration Testing Results](images/Jenkins_build_4_run_tests.png)
+
+
+
+## Future Improvements
+Moving on with the project, there are different things which could be implemented which will help progress the project. This includes:
+
+* Providing more information for each player record such as: date of birth, position, shirt number, etc.
+* Improving the aesthetics of the application to make it more interesting to look at. Doing so could also improve the readability of the application.
+* Implementing the ability to click on a specific team which would redirect the user to a page with more information about the chosen team.
+* Ability to classify teams into the specific league they are on, e.g. Manchester United will be placed in the Premier League category.
+
+## Authors
+Jason Antonino
