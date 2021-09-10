@@ -1,7 +1,9 @@
 # DevOps Core Fundamental Project
 
 ## Useful Links
-* Trello Board: [Click Here](https://trello.com/b/L9eDm4ez/1st-project)
+* Full Trello Board: [Click Here](https://trello.com/b/L9eDm4ez/1st-project)
+* Risk Assessment Spreadsheet: [Click Here](https://docs.google.com/spreadsheets/d/1Wgw9pTypR84LuEqfc9O1IeJZc8NFwVIvTogPVDZKR4w/edit?usp=sharing)
+
 
 
 ## Contents
@@ -57,11 +59,11 @@ As for the Continuous Integration Server, the project uses Jenkins as the main s
 This automation process starts by Jenkins pulling the latest code repository from GitHub and is then passed to a build tool. From this, unit and integration testing are performed using Pytest and Selenium. Once the tests are completed, the coverage reports are then sent back where it is then displayed within the build history.
 
 ### Project Tracking
-Trello
-agile methodology
+In order to track the progression of the project, the project has utilised the Trello board, as shown in the image below:
 
 ![Trello Sprints](images/trello_sprints.png)
 
+For this project, an agile methodology has been used and to reflect this on Trello, the user stories and tasks from the product backlog list have been delegated across four sprints. In addition to this, the project uses the MoSCoW method in order to prioritise the different user stories and tasks. This is shown in the Trello board through the coloured labels assigned within each task. For this project, I have assigned all the tasks needed for a minimum viable product (MVP) to be a Must-Have (green label).
 
 ### Version Control System (VCS)
 The version control system's main purpose is to track any changes that has been made to the codebase over time. To add to this, the VCS allow the application to be reverted to a stable state in the event that a newly pushed code breaks the application.
@@ -74,31 +76,37 @@ For this project, an Amazon Web Services (AWS) ec2 instance was used in order to
 This virtual machine was then used, alongside Python, in order to develop the application. Upon the completion of a task, new changes were then staged, commited and pushed into the GitHub repository. 
 
 ### Continuous Integration (CI) Server
-Jenkins
+Jenkins is used as the software for the CI server. The purpose of this software is to automate the testing of the application after a push has been made to the Github repository.
+
+For this project, there are two freestyle projects that have been created. The first project's main purpose is to run the unit and itegration coverage tests whenever changes were pushed to the repository, which it does via a webhook. 
+
+The other freestyle project's purpose is to test that the application can be successfully run. In order for this fully function, a systemd service file is running on the virtual machine which is being updated by the Jenkins software. In doing so, the commands to run the application can be executed but will also allow the build to successfully finish if there are no failures within the tests.
 
 
 
 
 ## Risk Assessment
-This section looks into the possible risks that may arise during the development of the application.
+During the development cycle of the project, there will be many potential risks that could happen. Therefore, a risk assessment has been performed to ensure that any risks that could occur have been considered and that mitigations can be quickly put in place if needed. Shown below is a risk assessment matrix for this project and the full document is linked at the top of the README file.
 
 ![Risk assessment table](images/risk_assessment.png)
 
 
 
 ## The Flask Application
+This section discusses as to how the application can be run. In addition to this, the section will cover the CRUD functionalities that can be performed within the front-end of the application.
+
 ### Running the Application
-There are two main ways in which the application was run within the project, both of which are able to be run within the terminal:
-
-1. Using normal Python: ``` python app.py ```
-2. Using Gunicorn: ``` gunicorn --workers=4 --bind=0.0.0.0:5000 app:app ```
-
 To ensure that the application is able to properly load up, these commands have to be run before running the application:
 * Crate a virtual environment: ``` python -m venv venv ``` then ``` source venv/bin/activate ```
 * Installing all required modules: ``` pip install -r requirements.txt ```
 * Exporting the DATABASE_URI environment variable
 * Exporting the SECRET_KEY environment variable
 * Creating the database tables: ``` python create.py ```
+
+There are two main ways in which the application was run within the project, both of which are able to be run within the terminal:
+
+1. Using normal Python: ``` python app.py ```
+2. Using Gunicorn: ``` gunicorn --workers=4 --bind=0.0.0.0:5000 app:app ```
 
 
 ### Read Operation
