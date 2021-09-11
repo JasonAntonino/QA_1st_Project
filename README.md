@@ -50,7 +50,7 @@ The CI pipeline provides the ability to maintain a single source code repository
 
 For this project, a continuous integration pipeline has been used for the benefits stated earlier, and the model used can be seen in the diagram below:
 
-![continuous Integration Pipeline Diagram](images/CI_pipeline_updated.png)
+![continuous Integration Pipeline Diagram](images/CI_Pipeline_updated.png)
 
 To keep track of the product backlog, the project utilises the Trello board as the main project tracking software. As for the code development, the project was developed using an Amazon Web Service (AWS) ec2 Linux instance, and the Python programming language was used.
 
