@@ -6,7 +6,7 @@
 </head>
 <body>
     {% block body %}
-        <!-- <h1>Add team page</h1> -->
+        <h1>Add a Team</h1>
         <div class="form">
             <form action="" method="POST">
                 {{ form.hidden_tag() }}     <!-- Helps prevent CSRF attack -->
@@ -17,7 +17,14 @@
                 {{ form.team_location.label }}: {{ form.team_location }} <br>
                 {{ form.submit }}
             </form>
-            {{ message }}
+            {% for message in get_flashed_messages() %}
+                {{ message }}
+            {% endfor %}
+
+            {% for anError in errorList %}
+                {{ "".join(anError) }}
+                <br>
+            {% endfor %}
         </div>
         
 

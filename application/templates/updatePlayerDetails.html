@@ -7,7 +7,7 @@
 
 <body>
     {% block body %}
-        <h1>Update Player Details page</h1>
+        <h1>Update Player Details</h1>
 
         <div class="form">
             <form action="" method="POST">
@@ -21,6 +21,10 @@
                 {{ form.submit }}
             </form>
             {{ message }}
+
+            {% if errorListLength != 0 %}
+                {{ "".join(errorList[0]) }}
+            {% endif %}
         </div>
         
     {% endblock body %}

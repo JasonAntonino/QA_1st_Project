@@ -7,7 +7,7 @@
 
 <body>
     {% block body %}
-        <h1>Update Team Details page</h1>
+        <h1>Update Team Details</h1>
 
         <div class="form">
             <form action="" method="POST">
@@ -20,6 +20,29 @@
                 {{ form.submit }}
             </form>
             {{ message }}
+
+            
+            {% if errorListLength == 2 %}
+                {% for i in range(errorListLength) %}
+                    {% if i == 0 %}
+                        Please edit the team name
+                        <br>
+                    {% else %}
+                        {{ "".join(errorList[i]) }}
+                        <br>
+                    {% endif %}
+                {% endfor %}
+            {% elif errorListLength == 1 %}
+                {% if "The team already exists." in errorList[0]  %}
+                    Please edit the team name.
+                    <br>
+                {% else %}
+                    {{ "".join(errorList[0]) }}
+                    <br>
+                {% endif %}
+            {% else %}
+            
+            {% endif %}
         </div>
         
     {% endblock body %}

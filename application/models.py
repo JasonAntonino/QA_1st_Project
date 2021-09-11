@@ -4,7 +4,7 @@ from application import db          #Imports the database object
 class Teams(db.Model):
     id = db.Column(db.Integer, primary_key=True)                            #Primary Key
     team_name = db.Column(db.String(50), unique=True, nullable=False)       #Name VARCHAR(50) NOT NULL
-    team_manager = db.Column(db.String(120), unique=True, nullable=False)   #Manager VARCHAR(120) NOT NULL
+    team_manager = db.Column(db.String(120), nullable=False)                #Manager VARCHAR(120) NOT NULL
     team_location = db.Column(db.String(200), nullable=False)               #Location VARCHAR(200) NOT NULL
     players = db.relationship('Players', backref='teams')
 
