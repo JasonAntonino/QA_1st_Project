@@ -3,6 +3,8 @@
 ## Useful Links
 * Full Trello Board: [Click Here](https://trello.com/b/L9eDm4ez/1st-project)
 * Risk Assessment Spreadsheet: [Click Here](https://docs.google.com/spreadsheets/d/1Wgw9pTypR84LuEqfc9O1IeJZc8NFwVIvTogPVDZKR4w/edit?usp=sharing)
+* Presentation Slides: [Click Here](https://docs.google.com/presentation/d/16uy0sQXb6g2-JNNzp6p7KPjUVYJTpT-0_QWb30F09vg/edit?usp=sharing)
+* Extra Project Documentation: [Click Here](https://docs.google.com/document/d/1k5FUWanJjliEDND8kLC4b8CeOvQ3LOMV72nFerUnRkk/edit?usp=sharing)
 
 
 
@@ -90,6 +92,7 @@ During the development cycle of the project, there will be many potential risks 
 
 ![Risk assessment table](images/risk_assessment.png)
 
+Throughout the development of the project, the risk assessment was reviewed and modified when required to ensure that the project continues to plan ahead of any potential risks that may happen. This is shown in the full document listed at the top of the README file.
 
 
 ## The Flask Application
